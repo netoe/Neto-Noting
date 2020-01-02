@@ -1,18 +1,27 @@
 //
 
 import React from 'react';
+import {AppSecondaryMenuGroup, IMenuSummaryPage} from 'src/graphic/components/AppSecondaryMenu';
 import {IRealNote} from '../resources/typed-notes';
-import {AppMenuNotes, RR} from './resources';
+import {AppMenuNotes, AppMenuSummaryPages, RR} from './resources';
 
 interface IProps {
-	selectedMenuItem?: IRealNote;
-	onSelected: (entry: IRealNote) => any;
+	summaryPageSelected?: IMenuSummaryPage;
+	onSummaryPageSelected: (entry: IMenuSummaryPage) => any;
+
+	noteSelected?: IRealNote;
+	onNoteSelected: (entry: IRealNote) => any;
 }
 
-export const AppMenus = React.memo(({selectedMenuItem, onSelected}: IProps) => (
-	<AppMenuNotes
-		sections={RR.sections} color={'#099'}
-		selectedMenuItemId={selectedMenuItem?._id || RR.defaultMenuItemId}
-		onSelect={(entryId, entry) => onSelected(entry)}
-	/>
+export const AppMenus = React.memo(({summaryPageSelected, noteSelected, onNoteSelected, onSummaryPageSelected}: IProps) => (
+	<AppSecondaryMenuGroup>
+		<AppMenuSummaryPages
+			sections={[RR.secOverview]} color={'#099'}
+			selectedMenuItemId={summaryPageSelected?._id} onSelect={(entryId, entry) => onSummaryPageSelected(entry)}
+		/>
+		<AppMenuNotes
+			sections={[RR.secNotes]} color={'#099'}
+			selectedMenuItemId={noteSelected?._id} onSelect={(entryId, entry) => onNoteSelected(entry)}
+		/>
+	</AppSecondaryMenuGroup>
 ));
