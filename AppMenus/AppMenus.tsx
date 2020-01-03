@@ -1,7 +1,7 @@
 //
 
 import React from 'react';
-import {AppSecondaryMenuGroup, IMenuSummaryPage} from 'src/graphic/components/AppSecondaryMenu';
+import {AppSecondaryMenuGroup, IMenuSummaryPage} from 'src/mui-views/app/AppSecondaryMenu';
 import {IRealNote} from '../resources/typed-notes';
 import {AppMenuNotes, AppMenuSummaryPages, RR} from './resources';
 

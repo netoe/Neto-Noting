@@ -1,9 +1,13 @@
 //
 
 import React from 'react';
+import {useLocalizedResourcesFromContext} from 'src/mui-lib/hooks/useLanguage';
+import {AppPageHeader} from 'src/mui-views/app/AppPageHeader';
+import {AppPageParagraph} from 'src/mui-views/app/AppPageParagraph';
 import {IRealNote} from '../resources/typed-notes';
 import {CardNote} from '../views/CardNote';
 import {useStyles} from './styles';
+import {RB} from './resources';
 
 interface IProps {
 	notes?: IRealNote[];
@@ -12,6 +16,7 @@ interface IProps {
 
 export const NotesHome = React.memo(({notes, onSelected}: IProps) => {
 	const cls = useStyles();
+	const R = useLocalizedResourcesFromContext(RB);
 
 	const renderNotes = () => {
 		if (!notes) {return;}
@@ -26,6 +31,8 @@ export const NotesHome = React.memo(({notes, onSelected}: IProps) => {
 
 	return (
 		<div className={cls.ctnPage}>
+			<AppPageHeader title={R.title}/>
+			<AppPageParagraph description={R.description}/>
 			{renderNotes()}
 		</div>
 	);

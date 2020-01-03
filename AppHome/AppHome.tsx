@@ -1,9 +1,9 @@
 //
 
 import React from 'react';
-import {LayoutAppHeader} from 'src/graphic/components/LayoutAppHeader';
+import {LayoutAppHeader} from 'src/mui-views/app/LayoutAppHeader';
 import {useLocalizedResourcesFromContext} from 'src/mui-lib/hooks/useLanguage';
-import {IMenuSummaryPage} from 'src/graphic/components/AppSecondaryMenu';
+import {IMenuSummaryPage} from 'src/mui-views/app/AppSecondaryMenu';
 import {AppMenus} from '../AppMenus/AppMenus';
 import {defaultMenuNotesOverviewPage} from '../AppMenus/resources';
 import {NoteHome} from '../NoteHome/NoteHome';
@@ -28,7 +28,6 @@ export const AppHome = React.memo<IProps>(() => {
 
 	const renderOverviewPage = () => (
 		<div className={cls.page} style={{padding: 18}}>
-			<h1>Hello, this is the collection of notes.</h1>
 			<NotesHome notes={mocked.notes} onSelected={(note) => setSelectedPage({note})}/>
 		</div>
 	);

@@ -1,8 +1,8 @@
 //
 
 import React from 'react';
-import {AppPageDescription} from 'src/graphic/components/AppPageDescription';
-import {AppPageHeader} from 'src/graphic/components/AppPageHeader';
+import {AppPageHeader} from 'src/mui-views/app/AppPageHeader';
+import {AppPageParagraph} from 'src/mui-views/app/AppPageParagraph';
 import {IRealNote} from '../resources/typed-notes';
 import {useStyles} from './styles';
 
@@ -12,13 +12,14 @@ interface IProps {
 
 export const NoteHome = React.memo(({note}: IProps) => {
 	const cls = useStyles();
-	const {name, description} = note;
+	const {name, description, tags} = note;
 
 	return (
 		<div className={cls.ctnPage}>
 			<AppPageHeader title={name}/>
-			<AppPageDescription description={description}/>
+			<AppPageParagraph description={description}/>
 
+			{tags ? <AppPageParagraph description={tags.join(', ')}/> : undefined}
 		</div>
 	);
 });

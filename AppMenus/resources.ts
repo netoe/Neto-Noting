@@ -1,6 +1,6 @@
 //
 
-import {getAppSecondaryMenu, IMenuSection, IMenuSummaryPage, newMenuSection, newMenuSummaryItem} from 'src/graphic/components/AppSecondaryMenu';
+import {getAppSecondaryMenu, IMenuSection, IMenuSummaryPage, newMenuSection, newMenuSummaryItem} from 'src/mui-views/app/AppSecondaryMenu';
 import {mocked} from '../resources/mocked-notes';
 import {IRealNote} from '../resources/typed-notes';
 
