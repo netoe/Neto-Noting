@@ -7,6 +7,8 @@ import {IMenuSummaryPage} from 'src/graphic/components/AppSecondaryMenu';
 import {AppMenus} from '../AppMenus/AppMenus';
 import {defaultMenuNotesOverviewPage} from '../AppMenus/resources';
 import {NoteHome} from '../NoteHome/NoteHome';
+import {NotesHome} from '../NotesHome/NotesHome';
+import {mocked} from '../resources/mocked-notes';
 import {IRealNote} from '../resources/typed-notes';
 import {RB} from './resources';
 import {useStyles} from './styles';
@@ -27,6 +29,7 @@ export const AppHome = React.memo<IProps>(() => {
 	const renderOverviewPage = () => (
 		<div className={cls.page} style={{padding: 18}}>
 			<h1>Hello, this is the collection of notes.</h1>
+			<NotesHome notes={mocked.notes} onSelected={(note) => setSelectedPage({note})}/>
 		</div>
 	);
 
