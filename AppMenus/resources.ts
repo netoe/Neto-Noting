@@ -1,29 +1,57 @@
 //
 
 import {getAppSecondaryMenu, IMenuSection, IMenuSummaryPage, newMenuSection, newMenuSummaryItem} from 'src/mui-views/app/AppSecondaryMenu';
-import {mocked} from '../resources/mocked-notes';
 import {IRealNote} from '../resources/typed-notes';
+
+type IR = typeof R;
+
+const r = {
+	idSecOverview: 'sec-overview',
+	idPageNotes: 'page-notes',
+	idSecNotes: 'sec-notes',
+};
+
+const R = {
+	...r,
+	secOverview: 'Overview',
+	pageNotes: 'All Notes',
+
+	secNotes: 'Notes',
+};
+
+const R_ZH: IR = {
+	...r,
+	secOverview: '总览',
+	pageNotes: '所有笔记',
+
+	secNotes: '笔记',
+};
 
 export const AppMenuNotes = getAppSecondaryMenu<IRealNote, IMenuSection<IRealNote>>();
 export const AppMenuSummaryPages = getAppSecondaryMenu<IMenuSummaryPage, IMenuSection<IMenuSummaryPage>>();
 
-const secOverview = newMenuSection<IMenuSummaryPage>('sec-overview', 'Overview', [
-	newMenuSummaryItem('notes', 'All Notes'),
+export const RB = {df: R, en: R, zh: R_ZH};
+
+const secOverview = newMenuSection<IMenuSummaryPage>(R.idSecOverview, R.secOverview, [
+	newMenuSummaryItem(R.idPageNotes, R.pageNotes),
 ]);
-const secNotes = newMenuSection<IRealNote>('sec-notes', 'Notes',
-	mocked.notes,
-);
-const sections: IMenuSection[] = [
-	secOverview,
-	secNotes,
-];
-export const defaultMenuNotesOverviewPage = secOverview.items[0];
-const defaultMenuItemId = defaultMenuNotesOverviewPage._id;
+const secOverviewZh = newMenuSection<IMenuSummaryPage>(R_ZH.idSecOverview, R_ZH.secOverview, [
+	newMenuSummaryItem(R_ZH.idPageNotes, R_ZH.pageNotes),
+]);
+
+const secNotes = newMenuSection<IRealNote>(R.idSecNotes, R.secNotes, []);
+const secNotesZh = newMenuSection<IRealNote>(R_ZH.idSecNotes, R_ZH.secNotes, []);
 
 // Resource > General Resource
 export const RR = {
-	sections,
 	secOverview,
+	secOverviewZh,
 	secNotes,
-	defaultMenuItemId,
+	secNotesZh,
 };
+
+const R1 = {secOverview, secNotes};
+const R2: typeof R1 = {secOverview: secOverviewZh, secNotes: secNotesZh};
+export const RB2 = {df: R1, en: R1, zh: R2};
+
+export const defaultMenuNotesOverviewPage = secOverview.items[0];

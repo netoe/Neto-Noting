@@ -1,9 +1,11 @@
 //
 
 import {newNote} from '../resources/constructors';
+import {mocked} from '../resources/mocked-notes';
 import {INotePatch, IRealNote} from '../resources/typed-notes';
 
 const _notes = new Map<string, IRealNote>();
+mocked.notes.map(note => _notes.set(note._id, note));
 
 const isMatch = (base: string, search: string): boolean => base.toLowerCase().includes(search.trim().toLowerCase());
 const getNote = (_id: string): IRealNote => {
