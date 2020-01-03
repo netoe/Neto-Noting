@@ -6,6 +6,8 @@ import {IRealNote} from '../resources/typed-notes';
 import {AppMenuNotes, AppMenuSummaryPages, RR} from './resources';
 
 interface IProps {
+	notes?: IRealNote[];
+
 	summaryPageSelected?: IMenuSummaryPage;
 	onSummaryPageSelected: (entry: IMenuSummaryPage) => any;
 
