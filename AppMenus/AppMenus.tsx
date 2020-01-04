@@ -20,7 +20,7 @@ interface IProps {
 
 export const AppMenus = React.memo((
 	{
-		notes = [],
+		notes,
 		summaryPageSelected, onSummaryPageSelected,
 		noteSelected, onNoteSelected,
 		R = useLocalizedResourcesFromContext(RB2),

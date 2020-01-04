@@ -5,6 +5,7 @@ import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
+import Skeleton from '@material-ui/lab/Skeleton';
 import {IRealNote} from '../resources/typed-notes';
 import {useStyles} from './styles';
 
@@ -19,12 +20,25 @@ export const CardNote = React.memo(({note, onClick}: IProps) => {
 
 	return (
 		<Card className={cls.ctn}>
-			<CardActionArea>
-				<CardContent onClick={onClick}>
+			<CardActionArea onClick={onClick}>
+				<CardContent>
 					<Typography gutterBottom variant="h5" component="h2">{name}</Typography>
 					<Typography variant="body2" color="textSecondary" component="p">{description}</Typography>
 				</CardContent>
 			</CardActionArea>
+		</Card>
+	);
+});
+
+export const CardNoteSkeleton = React.memo(() => {
+	const cls = useStyles();
+	return (
+		<Card className={cls.ctn}>
+			<CardContent>
+				<Skeleton variant='rect' animation="wave" height={'2em'}/>
+				<div style={{height: 16}}/>
+				<Skeleton variant='rect' animation="wave"/>
+			</CardContent>
 		</Card>
 	);
 });
