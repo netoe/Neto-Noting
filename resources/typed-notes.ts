@@ -7,7 +7,7 @@ export interface IMetadata {
 
 export interface INotePatch {
 	name: string;
-	description: string;
+	description?: string;
 	parentId?: string;
 	tags?: string[];
 }

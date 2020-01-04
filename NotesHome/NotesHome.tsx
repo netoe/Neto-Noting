@@ -6,12 +6,14 @@ import {AppPageHeader} from 'src/mui-views/app/AppPageHeader';
 import {AppPageParagraph} from 'src/mui-views/app/AppPageParagraph';
 import {AppActionButton} from 'src/mui-views/app/AppActionButton';
 import {DialogUpsertNote} from '../DialogUpsertNote/DialogUpsertNote';
+import {NotesManager} from '../helpers/NotesManager';
 import {IRealNote} from '../resources/typed-notes';
 import {INotesCollectionProps, NotesCollection} from '../views/NotesCollection';
 import {useStyles} from './styles';
 import {RB} from './resources';
 
-interface IProps {
+interface IProps extends INotesCollectionProps {
+	doRefresh: Function;
 }
 
 interface IDialogState {
@@ -20,7 +22,7 @@ interface IDialogState {
 	base?: Partial<IRealNote>;
 }
 
-export const NotesHome = React.memo((colProps: INotesCollectionProps) => {
+export const NotesHome = React.memo(({doRefresh, ...colProps}: IProps) => {
 	const cls = useStyles();
 	const R = useLocalizedResourcesFromContext(RB);
 
@@ -29,9 +31,16 @@ export const NotesHome = React.memo((colProps: INotesCollectionProps) => {
 	const onCreateNote = () => {
 		setDialog({switch: true, base: {}});
 	};
+	const onDismissDialog = () => setDialog({switch: false, base: {}});
 
-	const doCreateNote = (note: any) => {
-		console.log('ready to create:', note);
+	const doCreateNote = (patch: Partial<IRealNote>) => {
+		const {name, description} = patch;
+		if (!name) {return alert('The note content is required.');}
+		onDismissDialog();
+		NotesManager.createNote(name, description).then(note => {
+			console.log('created note:', note, patch);
+			doRefresh();
+		});
 	};
 
 	const doUpdateNote = (noteId: any, patch: any) => {
@@ -41,12 +50,8 @@ export const NotesHome = React.memo((colProps: INotesCollectionProps) => {
 	const renderNoteDialog = () => (
 		<DialogUpsertNote
 			open={dialog.switch}
-			isCreating={Boolean(dialog.base)}
-			baseEntity={dialog.base}
-			targetEntity={dialog.target}
-			doDismissDialog={() => setDialog({switch: false, base: {}})}
-			doCreateEntity={doCreateNote}
-			doUpdateEntity={doUpdateNote}
+			isCreating={Boolean(dialog.base)} baseEntity={dialog.base} targetEntity={dialog.target}
+			doDismissDialog={onDismissDialog} doCreateEntity={doCreateNote} doUpdateEntity={doUpdateNote}
 		/>
 	);
 

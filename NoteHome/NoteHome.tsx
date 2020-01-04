@@ -7,13 +7,17 @@ import {AppActionButton} from 'src/mui-views/app/AppActionButton';
 import {DialogConfirmButton} from 'src/mui-lib/dialogs/DialogConfirmButton';
 import {DialogConfigures} from 'src/mui-lib/dialogs/DialogConfiguresHelper';
 import {useLocalizedResourcesFromContext} from 'src/mui-lib/hooks/useLanguage';
+import {usePromiseFetcher} from 'src/mui-lib/hooks/usePromiseFetcher';
 import {DialogUpsertNote} from '../DialogUpsertNote/DialogUpsertNote';
+import {NotesManager} from '../helpers/NotesManager';
 import {IRealNote} from '../resources/typed-notes';
 import {RB} from './resources';
 import {useStyles} from './styles';
 
 interface IProps {
 	note: IRealNote;
+	onExit: Function;
+	onExitAndRefresh: Function;
 }
 
 interface IDialogState {
@@ -22,35 +26,46 @@ interface IDialogState {
 	base?: Partial<IRealNote>;
 }
 
-export const NoteHome = React.memo(({note}: IProps) => {
+export const NoteHome = React.memo(({note, onExit, onExitAndRefresh}: IProps) => {
 	const cls = useStyles();
 	const R = useLocalizedResourcesFromContext(RB);
-	const {name, description, tags} = note;
 
+	const [fetcher, doRefresh] = usePromiseFetcher<IRealNote>(() => NotesManager.readNote(note._id), [note]);
 	const [dialog, setDialog] = React.useState({switch: false} as IDialogState);
+
+	const {name, description, tags} = fetcher.data || note;
 
 	const onUpdateNote = () => {
 		setDialog({switch: true});
 	};
+	const onDismissDialog = () => setDialog({switch: false});
 
 	// Create sub (treed )notes.
 	const doCreateNote = (note: any) => {
 		console.log('ready to create:', note);
 	};
 
-	const doUpdateNote = (noteId: any, patch: any) => {
-		console.log('ready to update:', noteId, patch);
+	const doUpdateNote = (noteId: string, patch: Partial<IRealNote>) => {
+		onDismissDialog();
+		NotesManager.updateNote(note._id, patch).then(res => {
+			console.log('updated:', res, noteId, patch, note);
+			doRefresh();
+		});
 	};
 
 	const doDeleteNote = () => {
-		console.log('ready to delete:', note);
+		onDismissDialog();
+		NotesManager.deleteNote(note._id).then(res => {
+			console.log('deleted:', res, note);
+			onExitAndRefresh();
+		});
 	};
 
 	const renderNoteDialog = () => (
 		<DialogUpsertNote
 			open={dialog.switch}
 			isCreating={false} targetEntity={note}
-			doDismissDialog={() => setDialog({switch: false})}
+			doDismissDialog={onDismissDialog}
 			doUpdateEntity={doUpdateNote}
 		/>
 	);

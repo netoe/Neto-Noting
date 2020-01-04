@@ -7,6 +7,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import {EnumViewModes, ViewModeIconsDefaultMobile} from 'src/mui-lib/widgets/GroupedViewModes';
 import {GroupedIconButtons} from 'src/mui-lib/widgets/GroupedIconButtons';
+import {IFetcher} from 'src/mui-lib/hooks/useFetcher';
 import {IRealNote} from '../resources/typed-notes';
 import {CardNote, CardNoteSkeleton} from './CardNote';
 
@@ -23,14 +24,16 @@ export type INotesCollectionProps = IProps
 
 interface IProps {
 	mode?: number;
-	notes?: IRealNote[];
+	fetcher: IFetcher<IRealNote[]>;
 	onSelected: (note: IRealNote) => any;
 }
 
-export const NotesCollection = React.memo(({mode, notes, onSelected}: IProps) => {
+export const NotesCollection = React.memo(({mode, fetcher, onSelected}: IProps) => {
 	const cls = useStyles();
 
 	const [curMode, setMode] = React.useState(EnumViewModes.Gallery);
+
+	const notes = fetcher.data;
 
 	const renderNotes = (mode: number = curMode) => {
 		switch (mode) {

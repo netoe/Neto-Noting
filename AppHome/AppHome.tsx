@@ -26,20 +26,29 @@ export const AppHome = React.memo<IProps>(() => {
 	const R = useLocalizedResourcesFromContext(RB);
 
 	const [page, setSelectedPage] = React.useState({summary: defaultMenuNotesOverviewPage} as IState);
-	const [fetcher] = usePromiseFetcher<IRealNote[]>(() => NotesManager.readNotes().then(notes => {
+	const [fetcher, doRefresh] = usePromiseFetcher<IRealNote[]>(() => NotesManager.readNotes().then(notes => {
 		console.log('fetched notes:', fetcher);
 		return notes;
 	}));
 
+	const onExitAndRefresh = () => {
+		setSelectedPage({summary: defaultMenuNotesOverviewPage});
+		doRefresh();
+	};
+
 	const renderOverviewPage = () => (
 		<div className={cls.page} style={{padding: 18}}>
-			<NotesHome notes={fetcher.data} onSelected={(note) => setSelectedPage({note})}/>
+			<NotesHome fetcher={fetcher} doRefresh={doRefresh} onSelected={(note) => setSelectedPage({note})}/>
 		</div>
 	);
 
 	const renderNotePage = () => page.note ? (
 		<div className={cls.page}>
-			<NoteHome note={page.note}/>
+			<NoteHome
+				note={page.note}
+				onExit={() => setSelectedPage({summary: defaultMenuNotesOverviewPage})}
+				onExitAndRefresh={onExitAndRefresh}
+			/>
 		</div>
 	) : undefined;
 

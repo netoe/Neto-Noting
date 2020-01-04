@@ -22,7 +22,7 @@ const readNotes = (search?: string): Promise<IRealNote[]> => {
 	if (!search) {return mock(notes);}
 	return mock(notes.filter(note => isMatch(note.name, search)));
 };
-const createNote = (name: string, description: string, parentId?: string, tags?: string[]): Promise<IRealNote> => {
+const createNote = (name: string, description?: string, parentId?: string, tags?: string[]): Promise<IRealNote> => {
 	const note = newNote(name, description, parentId, tags);
 	_notes.set(note._id, note);
 	return mock(note);

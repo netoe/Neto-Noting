@@ -1,7 +1,7 @@
 'use strict';
 
 import {IInputFieldDefinition} from 'src/mui-lib/editors/definitions';
-import {FieldTypeString, FieldVariantOutlined} from 'src/mui-lib/editors/instances';
+import {FieldAutoCompleteOff, FieldTypeString, FieldVariantOutlined} from 'src/mui-lib/editors/instances';
 
 const options = {
 	variant: FieldVariantOutlined,
@@ -11,6 +11,7 @@ const options = {
 const fieldName: IInputFieldDefinition = {
 	...options,
 	id: 'name', label: 'Content',
+	autoComplete: FieldAutoCompleteOff,
 	placeholder: 'Enter the note content.',
 };
 
