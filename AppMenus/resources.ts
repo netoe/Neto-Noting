@@ -32,8 +32,9 @@ export const AppMenuSummaryPages = getAppSecondaryMenu<IMenuSummaryPage, IMenuSe
 
 export const RB = {df: R, en: R, zh: R_ZH};
 
+export const defaultMenuNotesOverviewPage = newMenuSummaryItem(R.idPageNotes, R.pageNotes);
 const secOverview = newMenuSection<IMenuSummaryPage>(R.idSecOverview, R.secOverview, [
-	newMenuSummaryItem(R.idPageNotes, R.pageNotes),
+	defaultMenuNotesOverviewPage,
 ]);
 const secOverviewZh = newMenuSection<IMenuSummaryPage>(R_ZH.idSecOverview, R_ZH.secOverview, [
 	newMenuSummaryItem(R_ZH.idPageNotes, R_ZH.pageNotes),
@@ -53,5 +54,3 @@ export const RR = {
 const R1 = {secOverview, secNotes};
 const R2: typeof R1 = {secOverview: secOverviewZh, secNotes: secNotesZh};
 export const RB2 = {df: R1, en: R1, zh: R2};
-
-export const defaultMenuNotesOverviewPage = secOverview.items[0];

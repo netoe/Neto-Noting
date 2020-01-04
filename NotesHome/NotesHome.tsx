@@ -4,31 +4,18 @@ import React from 'react';
 import {useLocalizedResourcesFromContext} from 'src/mui-lib/hooks/useLanguage';
 import {AppPageHeader} from 'src/mui-views/app/AppPageHeader';
 import {AppPageParagraph} from 'src/mui-views/app/AppPageParagraph';
-import {IRealNote} from '../resources/typed-notes';
-import {CardNote, CardNoteSkeleton} from '../views/CardNote';
+import {INotesCollectionProps, NotesCollection} from '../views/NotesCollection';
 import {useStyles} from './styles';
 import {RB} from './resources';
 
 interface IProps {
-	notes?: IRealNote[];
-	onSelected: (note: IRealNote) => any;
 }
 
-export const NotesHome = React.memo(({notes, onSelected}: IProps) => {
+export const NotesHome = React.memo((colProps: INotesCollectionProps) => {
 	const cls = useStyles();
 	const R = useLocalizedResourcesFromContext(RB);
 
-	const renderNotes = () => (
-		<div className={cls.ctnNotes}>
-			{notes ? notes.map(note => (
-				<CardNote key={note._id} onClick={() => onSelected(note)} note={note}/>
-			)) : (
-				new Array(6).fill(null).map((v, index) => (
-					<CardNoteSkeleton key={index}/>
-				))
-			)}
-		</div>
-	);
+	const renderNotes = () => (<NotesCollection {...colProps}/>);
 
 	return (
 		<div className={cls.ctnPage}>
