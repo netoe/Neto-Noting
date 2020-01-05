@@ -7,7 +7,7 @@ import {AppPageParagraph} from 'src/mui-views/app/AppPageParagraph';
 import {AppActionButton} from 'src/mui-views/app/AppActionButton';
 import {DialogUpsertNote} from '../DialogUpsertNote/DialogUpsertNote';
 import {NotesManager} from '../helpers/NotesManager';
-import {IRealNote} from '../resources/typed-notes';
+import {INotePatch, IRealNote} from '../resources/typed-notes';
 import {INotesCollectionProps, NotesCollection} from '../views/NotesCollection';
 import {useStyles} from './styles';
 import {RB} from './resources';
@@ -19,7 +19,7 @@ interface IProps extends INotesCollectionProps {
 interface IDialogState {
 	switch: boolean;
 	target?: IRealNote;
-	base?: Partial<IRealNote>;
+	base?: INotePatch;
 }
 
 export const NotesHome = React.memo(({doRefresh, ...colProps}: IProps) => {
@@ -33,7 +33,7 @@ export const NotesHome = React.memo(({doRefresh, ...colProps}: IProps) => {
 	};
 	const onDismissDialog = () => setDialog({switch: false, base: {}});
 
-	const doCreateNote = (patch: Partial<IRealNote>) => {
+	const doCreateNote = (patch: INotePatch) => {
 		const {name, description} = patch;
 		if (!name) {return alert('The note content is required.');}
 		onDismissDialog();

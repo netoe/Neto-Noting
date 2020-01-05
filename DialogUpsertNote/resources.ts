@@ -14,9 +14,16 @@ const fieldName: IInputFieldDefinition = {
 	autoComplete: FieldAutoCompleteOff,
 	placeholder: 'Enter the note content.',
 };
+const fieldDescription: IInputFieldDefinition = {
+	...options,
+	id: 'description', label: 'Description',
+	autoComplete: FieldAutoCompleteOff,
+	placeholder: 'Any extra content of the note.',
+};
 
 const fields = {
 	name: fieldName,
+	description: fieldDescription,
 };
 
 const zhFieldName: IInputFieldDefinition = {
@@ -24,9 +31,16 @@ const zhFieldName: IInputFieldDefinition = {
 	id: fieldName.id, label: '笔记内容',
 	placeholder: '填写写你的笔记主体内容。',
 };
+const zhFieldDescription: IInputFieldDefinition = {
+	...options,
+	id: fieldDescription.id, label: '描述',
+	autoComplete: FieldAutoCompleteOff,
+	placeholder: '更多的笔记描述。',
+};
 
 const zhFields = {
 	name: zhFieldName,
+	description: zhFieldDescription,
 };
 
 type getter = (isCreating: boolean) => string;

@@ -7,12 +7,12 @@ import {IDialogEntityEditorProps} from 'src/mui-lib/dialogs/IDialogEntityEditor'
 import {useDialogFullScreenOption} from 'src/mui-lib/hooks/useFullScreenOption';
 import {DialogConfigures} from 'src/mui-lib/dialogs/DialogConfiguresHelper';
 import {NotesUtils} from '../resources/notes-validator';
-import {IRealNote} from '../resources/typed-notes';
+import {INotePatch, IRealNote} from '../resources/typed-notes';
 import {RB} from './resources';
 
-const DialogNoteEditor = getDialogUpsertEntity<IRealNote, Partial<IRealNote>, string>();
+const DialogNoteEditor = getDialogUpsertEntity<IRealNote, INotePatch, string>();
 
-interface IProps extends IDialogEntityEditorProps<IRealNote, Partial<IRealNote>, string> {
+interface IProps extends IDialogEntityEditorProps<IRealNote, INotePatch, string> {
 
 }
 
@@ -20,7 +20,7 @@ interface IProps extends IDialogEntityEditorProps<IRealNote, Partial<IRealNote>,
 export const DialogUpsertNote = React.memo((props: IProps) => {
 	const fullScreen = useDialogFullScreenOption();
 	const R = useLocalizedResourcesFromContext(RB);
-	const fields = [R.fields.name];
+	const fields = [R.fields.name, R.fields.description];
 	const {isCreating, baseEntity, targetEntity, ...others} = props;
 
 	return (

@@ -10,7 +10,7 @@ import {useLocalizedResourcesFromContext} from 'src/mui-lib/hooks/useLanguage';
 import {usePromiseFetcher} from 'src/mui-lib/hooks/usePromiseFetcher';
 import {DialogUpsertNote} from '../DialogUpsertNote/DialogUpsertNote';
 import {NotesManager} from '../helpers/NotesManager';
-import {IRealNote} from '../resources/typed-notes';
+import {INotePatch, IRealNote} from '../resources/typed-notes';
 import {RB} from './resources';
 import {useStyles} from './styles';
 
@@ -23,7 +23,7 @@ interface IProps {
 interface IDialogState {
 	switch: boolean;
 	target?: IRealNote;
-	base?: Partial<IRealNote>;
+	base?: INotePatch;
 }
 
 export const NoteHome = React.memo(({note, onExit, onExitAndRefresh}: IProps) => {
@@ -45,7 +45,7 @@ export const NoteHome = React.memo(({note, onExit, onExitAndRefresh}: IProps) =>
 		console.log('ready to create:', note);
 	};
 
-	const doUpdateNote = (noteId: string, patch: Partial<IRealNote>) => {
+	const doUpdateNote = (noteId: string, patch: INotePatch) => {
 		onDismissDialog();
 		NotesManager.updateNote(note._id, patch).then(res => {
 			console.log('updated:', res, noteId, patch, note);

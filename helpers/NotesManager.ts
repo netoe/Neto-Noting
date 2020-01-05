@@ -28,7 +28,7 @@ const createNote = (name: string, description?: string, parentId?: string, tags?
 	return mock(note);
 };
 const readNote = (_id: string): Promise<IRealNote> => mock(getNote(_id));
-const updateNote = (_id: string, patch: Partial<INotePatch>): Promise<IRealNote> => {
+const updateNote = (_id: string, patch: INotePatch): Promise<IRealNote> => {
 	const note = getNote(_id);
 	const newNote = {...note, ...patch};
 	_notes.set(_id, newNote);

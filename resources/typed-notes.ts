@@ -5,12 +5,17 @@ export interface IMetadata {
 	createdTime: number;
 }
 
-export interface INotePatch {
+// The editable fields.
+interface iNotePatch {
 	name: string;
 	description?: string;
 	parentId?: string;
 	tags?: string[];
 }
 
-export interface IRealNote extends IMetadata, INotePatch {
+// The patch to create or update a note.
+// Further validations are needed.
+export type INotePatch = Partial<iNotePatch>
+
+export interface IRealNote extends IMetadata, iNotePatch {
 }
